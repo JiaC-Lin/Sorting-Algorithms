@@ -31,7 +31,7 @@ class Sort:
 
     def heapSort(self, arr: List[int]):
         N = len(arr) # starts at 1
-        print(N)
+        # print(N)
 
         # build max heap with heapify
         for i in range(N//2 - 1, -1, -1): # stops and not include when at -1
@@ -43,30 +43,32 @@ class Sort:
             self.heapify(arr, i, 0) # reduced the range to i
 
 # iterative heap sort
-    def iterMinHeap(self, arr, n):
+    def iterMaxHeap(self, arr, n):
+    # Order each number into a max heap
         for i in range(n):
             # if child bigger than parent
             if arr[i] > arr[int((i - 1) / 2)]:
                 j = i
                 # swap child and parent until parent is smaller
-                while arr[j] > arr[int((j - 1) / 2)]:
+                while arr[j] > arr[int((j - 1) / 2)]: 
                     self.swap(arr, j, int((j - 1) / 2))
                     j = int((j - 1) / 2)
 
     def iterHeapSort(self, arr, n):
-        self.iterMinHeap(arr, n)
+        # create Max heap to get first max value
+        self.iterMaxHeap(arr, n)
 
         for i in range(n - 1, 0, -1):
             # swap first index with last index
             self.swap(arr, 0, i)
-            # maintain heap property after each swapping
-            j = 0
-            index = 0
+            # maintain heap property after each swapping, thereby sorting through max values each time
+
+            j , index = 0, 0
 
             while True:
                 index = 2 * j + 1
-                
-                # if left child is smaller than right child point index variable to right child
+  
+                # if left child is smaller than right child; point index variable to right child
                 if (index < (i - 1) and arr[index] < arr[index + 1]):
                     index += 1
                 # if parent is smaller than child then swapping parent with child having higher value
