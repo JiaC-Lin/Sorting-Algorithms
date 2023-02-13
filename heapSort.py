@@ -63,20 +63,22 @@ class Sort:
             self.swap(arr, 0, i)
             # maintain heap property after each swapping, thereby sorting through max values each time
 
-            j , index = 0, 0
+            j = 0 # take root node
 
             while True:
-                index = 2 * j + 1
-  
-                # if left child is smaller than right child; point index variable to right child
+                index = 2 * j + 1 # left child
+
+                # first, set end limit of unsorted part of the array; make sure index does not overflow towards sorted part then move the root node down to the correct position
+                # if left child is smaller than right child; point index variable to right child, the biggest of the childs
                 if (index < (i - 1) and arr[index] < arr[index + 1]):
                     index += 1
-                # if parent is smaller than child then swapping parent with child having higher value
+                # if parent is smaller than biggest child then swapping parent with child having higher value to achieve max heap again
                 if index < i and arr[j] < arr[index]:
                     self.swap(arr, j, index)
 
                 j = index 
                 if index >= i:
+                    # no more values in unsorted part
                     break
 
 
