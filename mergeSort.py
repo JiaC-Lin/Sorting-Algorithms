@@ -1,6 +1,7 @@
 # divide the array into smaller and smaller pieces then sort them each time with each merge
 
 from typing import List
+import math
 
 class Sort:
 # Recursively sort with O(nlogn) time and O(n) space complexity
@@ -85,12 +86,51 @@ class Sort:
         return self.merge(rLeft, rRight)
 
 # Iterative Sort with O(nlogn) time complexity and O(n) space complexity
-    def iterMerge(self, ):
-        pass
+    def iterMerge(self, a, l, m, r):
+        # need to understand this -- holder for now
+        n1 = m - l + 1
+        n2 = r - m 
+        L = [0] * n1 
+        R = [0] * n2 
+        for i in range(0, n1): 
+            L[i] = a[l + i] 
+        for i in range(0, n2): 
+            R[i] = a[m + i + 1] 
+    
+        i, j, k = 0, 0, l 
+        while i < n1 and j < n2: 
+            if L[i] <= R[j]: 
+                a[k] = L[i] 
+                i += 1
+            else: 
+                a[k] = R[j] 
+                j += 1
+            k += 1
+    
+        while i < n1: 
+            a[k] = L[i] 
+            i += 1
+            k += 1
+    
+        while j < n2: 
+            a[k] = R[j] 
+            j += 1
+            k += 1
 
     def iterMergeSort(self, arr:List[int]):
         n = len(arr)
+        for p in range(2, n + 1):
+            for i in range(0, n + 1 - p):
+                left = i
+                right = i + p - 1
+                mid = math.floor((left + right) / 2)
 
+                self.iterMerge(arr, left, mid, right)
+
+                i += p
+            p *= 2
+        if (p/2) < n :
+            self.iterMerge(arr, 0, p/2, n-1)
 
 arr = [12, 11, 13, 5, 6, 7]
 Sort().mergeSort(arr)
@@ -110,7 +150,7 @@ for i in range(size):
     print(output[i], end=" ")
 print("\n")
 
-arr = [2, 83, 23, 31, 51, 16]
+arr = [2, 83, 23, 31, 51, 16, 8]
 Sort().iterMergeSort(arr)
 
 print("Sorted Iterative Array is:")
