@@ -86,34 +86,39 @@ class Sort:
         return self.merge(rLeft, rRight)
 
 # Iterative Sort with O(nlogn) time complexity and O(n) space complexity
+# [ l | m ]     [---| r ]   [ l | m ]   [ r ]
+# [ l |---|---| m ]     [---|---| r ]
+# [---|---|---|---|---|---|---]
     def iterMerge(self, a, l, m, r):
-        # need to understand this -- holder for now
-        n1 = m - l + 1
+        # determine the size of left array
+        n1 = m - l + 1 
         n2 = r - m 
-        L = [0] * n1 
-        R = [0] * n2 
+        # make an array with space of n1
+        Left = [0] * n1 
+        Right = [0] * n2 
+        # fill in the 2 mergers
         for i in range(0, n1): 
-            L[i] = a[l + i] 
+            Left[i] = a[l + i] 
         for i in range(0, n2): 
-            R[i] = a[m + i + 1] 
+            Right[i] = a[m + i + 1] 
     
         i, j, k = 0, 0, l 
         while i < n1 and j < n2: 
-            if L[i] <= R[j]: 
-                a[k] = L[i] 
+            if Left[i] <= Right[j]: 
+                a[k] = Left[i] 
                 i += 1
             else: 
-                a[k] = R[j] 
+                a[k] = Right[j] 
                 j += 1
             k += 1
     
         while i < n1: 
-            a[k] = L[i] 
+            a[k] = Left[i] 
             i += 1
             k += 1
     
         while j < n2: 
-            a[k] = R[j] 
+            a[k] = Right[j] 
             j += 1
             k += 1
 
@@ -122,15 +127,13 @@ class Sort:
         for p in range(2, n + 1):
             for i in range(0, n + 1 - p):
                 left = i
-                right = i + p - 1
-                mid = math.floor((left + right) / 2)
+                right = left + p - 1
+                mid = (left + right) // 2
 
                 self.iterMerge(arr, left, mid, right)
 
                 i += p
-            p *= 2
-        if (p/2) < n :
-            self.iterMerge(arr, 0, p/2, n-1)
+            p *= 2 # for the next 2 mergers
 
 arr = [12, 11, 13, 5, 6, 7]
 Sort().mergeSort(arr)
