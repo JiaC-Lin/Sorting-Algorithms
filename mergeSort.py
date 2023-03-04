@@ -85,8 +85,9 @@ class Sort:
         # Finally, mergesort the left and right half after each half is sorted
         return self.recurMerge(rLeft, rRight)
 
-# Iterative Sort with O(nlogn) time complexity and O(n) space complexity
+# Bottom-Up (smaller to bigger) Iterative Sort with O(nlogn) time complexity and O(n) space complexity
 # Start sorting all subarrays of length 1, by definition is already sorted. Then sort all subarrays of length 2 by merging length-1 subarrays. Then sort all subarrays of length 4 by merging length-2 subarrays. Repeat till whole array is sorted.
+# [       chunk 1       ]       [       chunk 2     ]
 # [ l | m ]     [---| r ]       [ l | m ]       [ r ]           //sub_size of 2
 # [ l |---|---| m ]     [---|---| r ]                           //sub_size of 4
 # [---|---|---|---|---|---|---]                                 //sub_size of 8
@@ -132,11 +133,13 @@ class Sort:
             # always start from leftmost and no need to sort the last element as it won't be merging with anything
             for i in range(0, n - 1):
                 left = i
+                # using left as indicator of the next batch we find the mid and right while keeping in mind not to take a value OUT OF RANGE therefore we take minimum with the last index
                 mid = min(left + sub_size - 1, n - 1)
                 right = min(left + 2 * sub_size - 1, n - 1)
                 # final merge should consider unmerged sublist if input arr size is not power of 2
                 self.iterMerge(arr, left, mid, right)
-
+                
+                # go to the next chunk (see image diagram) to merge the next 2 arrays
                 i += (sub_size * 2)
             # increase sub array size by multiplication power of 2 after each merge
             sub_size *= 2 
