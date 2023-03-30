@@ -1,13 +1,10 @@
-# worst case: O(n^2)
-# best and average time complexity: O(nlogn) and worst case space O(n) and best case O(logn)
-
 from typing import List
 from numpy import random
 
 class Sort:
     def swap(self, arr: List[int], i: int, j: int):
         arr[i], arr[j] = arr[j], arr[i]
-
+    
     def partition(self, arr: List[int], low: int, high: int):
         # uses last element as a PIVOT which can be optimized to be random
         pivot = arr[high]
@@ -24,6 +21,9 @@ class Sort:
         # return pivot in their 'correct' index
         return i
 
+# Recursion Quick Sort
+    # worst case: O(n^2)
+    # best and average time complexity: O(nlogn) and worst case space O(n) and best case O(logn)
     def recurQuickSort(self, arr: List[int], low: int, high: int):
         # Need base case to exit recursion
         if low < high: 
@@ -33,15 +33,39 @@ class Sort:
             self.recurQuickSort(arr, low, part - 1)
             self.recurQuickSort(arr, part + 1, high)
 
+# Iterative Quick Sort
+    # Time complexity of O(nlogn) with space complexity of O(n)
     def iterQuickSort(self, arr:List[int], low: int, high: int):
         # create auxilary stack
         stack = [0] * (high - low + 1)
         top = 0
+        # push/fill in stack
         stack[top] = low
         top += 1
         stack[top] = high
+
         while top >= 0:
-            pass
+            # pop out high and low then into h and l
+            h = stack[top]
+            top -= 1
+            l = stack[top]
+            top -= 1
+            # set pivot element in their correct position (part index) of sorted array
+            part = self.partition(arr, l, h)
+            # check if there are elements on left side or right side of part then push right side to stack
+            if (part - 1) > l:
+                top += 1
+                stack[top] = l
+
+                top += 1
+                stack[top] = (part - 1)
+
+            if (part + 1) < h:
+                top += 1
+                stack[top] = part + 1
+
+                top += 1
+                stack[top] = h
 
 arr = [2, 3, 14, 31, 61, 9, 18, 19]
 print(f"Unsorted Array is : {arr}")
