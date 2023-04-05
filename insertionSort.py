@@ -1,4 +1,4 @@
-# Sort array starting from leftmost. Starting from first element, sort one element at a time by shifting them one by one to the right (while loop) until we find a spot of the new element. The new element, "key", will then be put into the correct spot after sorting the array on left side of key.
+# Sort array starting from leftmost. Starting from first element, sort one element at a time by shifting sorted subarray element(s) one by one to the right (while loop) until we find the correct index for new element. The new element, "key", is put into the correct spot by sorting the array on left side of key through comparison of bigger elements.
 
 class Sort:
     # Worst Case: O(n^2), Average Case: O(n^2), Best Case: O(n)

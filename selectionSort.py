@@ -9,8 +9,18 @@ class Sort:
     def swap(self, arr:List[int], i: int, j:int):
         arr[i], arr[j] = arr[j], arr[i]
 
-    def recurSelectionSort(self, arr: List[int]):
-        pass
+# Recursive selection sort
+    # perform recursive sort on sublist 'A[i..n-1]'
+    def recurSelectionSort(self, arr: List[int], i: int, N: int):
+        # find the minimum element, starting with first element and making comparisons, in the unsorted sublist `A[i…n-1]` and swap it with `A[i]`
+        min = i
+        for j in range(i + 1, N):
+            if arr[j] < arr[min]:
+                min = j
+        self.swap(arr, min, i)
+        # Check if the next index is within range, if not then stop recursion
+        if (i + 1) < N:
+            self.recurSelectionSort(arr, i + 1, N)
 
 # Iterative Selection Sort:
 #   O(n^2) time with O(1) space complexity
@@ -31,4 +41,10 @@ class Sort:
 A = random.randint(50, size=(7))
 print(f"Unsorted Array is: {A}")
 Sort().iterSelectionSort(A)
-print(f"Sorted Array is: {A}")
+print(f"Sorted Array is: {A}", end="\n\n")
+
+A = random.randint(50, size=8)
+N = len(A)
+print(f"unsorted Array is: {A}")
+Sort().recurSelectionSort(A, 0, N)
+print(f"Sorted Array is: {A}", end="\n\n")
