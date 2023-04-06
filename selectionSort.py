@@ -10,6 +10,7 @@ class Sort:
         arr[i], arr[j] = arr[j], arr[i]
 
 # Recursive selection sort
+    # O(n^2) time with O(n) space complexity
     # perform recursive sort on sublist 'A[i..n-1]'
     def recurSelectionSort(self, arr: List[int], i: int, N: int):
         # find the minimum element, starting with first element and making comparisons, in the unsorted sublist `A[i…n-1]` and swap it with `A[i]`
